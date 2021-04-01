@@ -16,7 +16,7 @@ fig = Figure(figsize=(5, 4), dpi=100)
 t = np.arange(0, 3, .01)
 # fig.add_subplot().plot(t, 2 * np.sin(2 * np.pi * t))
 ax = plt.axes()
-ax.arrow(0, 0, 0.5, 0.5, head_width=0.05, head_length=0.1, fc='k', ec='k')
+ax.arrow(0, 0, 0.5, 0.5, head_width=0.05, head_length=0.05, fc='k', ec='k')
 plt.show()
 
 canvas = FigureCanvasTkAgg(fig, master=root)  # A tk.DrawingArea.
