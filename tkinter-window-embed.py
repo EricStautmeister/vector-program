@@ -1,53 +1,41 @@
-import tkinter
-
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-# Implement the default Matplotlib key bindings.
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-root = tkinter.Tk()
-root.wm_title("Embedding in Tk")
+root = tk.Tk()
+root.title("Embedding in Tk")
 
-# fig = Figure(figsize=(5, 4), dpi=100)
-# t = np.arange(50, 100, .01)
-# fig.add_subplot().plot(t, 2 * np.sin(2 * np.pi * t))
+screen_Height = root.winfo_screenheight()
+screen_Width = root.winfo_screenwidth()
+
+Height = screen_Height/1.1
+Width = screen_Width/1.1
+
+x_cord = screen_Width / 2 - Width / 2
+y_cord = (screen_Height - 80) / 2 - Height / 2
+
+root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 
 fig = plt.figure()
-ax = fig.add_subplot().plot([3, 4],
-                            [5, 6])
-# ax = plt.axes()
-# ax.arrow(0, 0, 0.5, 0.5, head_width=0.05, head_length=0.05, fc='k', ec='k')
+ax = fig.add_subplot()
+ax.plot([3, 4], [5, 6])
+# ax.set_xlim(0, 6)
+# ax.set_ylim(0, 6)
 
-canvas = FigureCanvasTkAgg(fig, master=root)  # A tk.DrawingArea.
+Mainframe = tk.Frame(root)
+Mainframe.place(relheight=1, relwidth=1)
+
+canvas = FigureCanvasTkAgg(fig, master=Mainframe)  # A tk.DrawingArea.
 canvas.draw()
 
-# pack_toolbar=False will make it easier to use a layout manager later on.
-toolbar = NavigationToolbar2Tk(canvas, root, pack_toolbar=False)
-toolbar.update()
+button = tk.Button(master=Mainframe, text="Quit", command=root.quit)
 
+randButton = tk.Button(master=Mainframe, text="Test Button", command=lambda: print("press"))
 
-canvas.mpl_connect(
-    "key_press_event", lambda event: print(f"you pressed {event.key}"))
-canvas.mpl_connect("key_press_event", key_press_handler)
+button.place(relx=0.45, rely=0.95, anchor="n")
+randButton.place(relx=0.5, rely=0.95, anchor="n")
+canvas.get_tk_widget().place(relx=0.45, rely=0.05, relheight=0.7, relwidth=0.5)
 
-button = tkinter.Button(master=root, text="Quit", command=root.quit)
-
-
-def randfunc():
-    pass
-randButton = tkinter.Button(master=root, text="Test Button", command=randfunc)
-
-# Packing order is important. Widgets are processed sequentially and if there
-# is no space left, because the window is too small, they are not displayed.
-# The canvas is rather flexible in its size, so we pack it last which makes
-# sure the UI controls are displayed as long as possible.
-button.pack(side=tkinter.BOTTOM)
-randButton.pack(side=tkinter.BOTTOM)
-toolbar.pack(side=tkinter.BOTTOM, fill=tkinter.X)
-canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-
-tkinter.mainloop()
+tk.mainloop()
