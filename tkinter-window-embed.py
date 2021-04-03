@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 def include_graph(fig, master):
     for widget in master.winfo_children():
         widget.destroy()
-    canv = FigureCanvasTkAgg(fig, master=master)
-    canv.get_tk_widget().place(relwidth=1, relheight=1)
+    plot_img = FigureCanvasTkAgg(fig, master=master)
+    plot_img.get_tk_widget().place(relwidth=1, relheight=1)
 
 
-class PltCanvas:
+class PltFrame:
 
     def __init__(self, main):
         self.plot_frame = tk.Frame(master=main)
@@ -52,23 +52,22 @@ root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 Mainframe = tk.Frame(root, bg="gray")
 Mainframe.place(relheight=1, relwidth=1)
 
-plot_frame = PltCanvas(Mainframe)
+plot_frame = PltFrame(Mainframe)
 
 # create button_frame and buttons
 button_frame = tk.Frame(master=Mainframe, bg="yellow")
 button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-button_2d = tk.Button(master=button_frame, text="2D", font="Helvetica 20",
-                      command=lambda: plot_frame.create_graph2d([2, 4], [1, 7]))
-button_3d = tk.Button(master=button_frame, text="3D", font="Helvetica 20",
-                      command=lambda: plot_frame.create_graph3d([2, 4], [1, 7], [2, 5]))
-button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.1)
-button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.1)
-
 # create settings_frame
 settings_frame = tk.Frame(master=Mainframe, bg="green")
 settings_frame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
 
+button_2d = tk.Button(master=settings_frame, text="2D", font="Helvetica 20",
+                      command=lambda: plot_frame.create_graph2d([2, 4], [1, 7]))
+button_3d = tk.Button(master=settings_frame, text="3D", font="Helvetica 20",
+                      command=lambda: plot_frame.create_graph3d([2, 4], [1, 7], [2, 5]))
+button_2d.place(relx=0.025, relwidth=0.45, rely=0.05, relheight=0.35)
+button_3d.place(relx=0.5125, relwidth=0.45, rely=0.05, relheight=0.35)
 quit_button = tk.Button(master=settings_frame, text="Quit", command=root.quit)
 quit_button.place(rely=0.75, relheight=0.22, relx=0.025, relwidth=0.95)
 
