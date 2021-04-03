@@ -22,7 +22,7 @@ root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 
 # create graph
 fig = plt.figure()
-ax = fig.add_subplot(projection="3d")
+ax = fig.add_subplot()
 ax.plot([3, 4], [5, 6])
 
 # set mainframe
@@ -31,22 +31,24 @@ Mainframe.place(relheight=1, relwidth=1)
 
 # include graph
 canvas = FigureCanvasTkAgg(fig, master=Mainframe)
-canvas.get_tk_widget().place(relx=0.45, rely=0.03, relheight=0.7, relwidth=0.525)
+canvas.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
 
-Actionframe = tk.Frame(master=Mainframe, bg="yellow")
-Actionframe.place(relx=0.025, relwidth=0.4, rely=0.03, relheight=0.45)
+# create buttonframe and buttons
+Buttonframe = tk.Frame(master=Mainframe, bg="yellow")
+Buttonframe.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-Calculateframe = tk.Frame(master=Mainframe, bg="green")
-Calculateframe.place(relx=0.025, relwidth=0.4, rely=0.5, relheight=0.47)
+quit_button = tk.Button(master=Buttonframe, text="Quit", command=root.quit())
+button_2d = tk.Button(master=Buttonframe, text="2d")
+button_3d = tk.Button(master=Buttonframe, text="3d")
 
-# create and add buttons
-Buttonframe = tk.Frame(master=Mainframe, bg="blue")
-Buttonframe.place(rely=0.75, relheight=0.22, relx=0.45, relwidth=0.525)
+button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.05)
+button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.05)
+quit_button.place(rely=0.925, relheight=0.05, relx=0.05, relwidth=0.9)
 
-button = tk.Button(master=Buttonframe, text="Quit", command=root.quit)
-randButton = tk.Button(master=Buttonframe, text="Test Button", command=lambda: print("press"))
+Settingsframe = tk.Frame(master=Mainframe, bg="green")
+Settingsframe.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
 
-button.grid()
-randButton.grid()
+Actionframe = tk.Frame(master=Mainframe, bg="blue")
+Actionframe.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
 
 tk.mainloop()
