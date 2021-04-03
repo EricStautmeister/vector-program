@@ -37,16 +37,19 @@ canvas.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632
 Buttonframe = tk.Frame(master=Mainframe, bg="yellow")
 Buttonframe.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-quit_button = tk.Button(master=Buttonframe, text="Quit", command=root.quit())
+
 button_2d = tk.Button(master=Buttonframe, text="2d")
 button_3d = tk.Button(master=Buttonframe, text="3d")
 
-button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.05)
-button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.05)
-quit_button.place(rely=0.925, relheight=0.05, relx=0.05, relwidth=0.9)
+button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.1)
+button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.1)
 
-Settingsframe = tk.Frame(master=Mainframe, bg="green")
-Settingsframe.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
+
+SettingsFrame = tk.Frame(master=Mainframe, bg="green")
+SettingsFrame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
+
+quit_button = tk.Button(master=SettingsFrame, text="Quit", command=root.quit)
+quit_button.place(rely=0.75, relheight=0.22, relx=0.025, relwidth=0.95)
 
 Actionframe = tk.Frame(master=Mainframe, bg="blue")
 Actionframe.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
