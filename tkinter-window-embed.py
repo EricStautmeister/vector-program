@@ -3,28 +3,33 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
 
+def include_graph(fig, master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    canv = FigureCanvasTkAgg(fig, master=master)
+    canv.get_tk_widget().place(relwidth=1, relheight=1)
+
+
 class PltCanvas:
 
     def __init__(self, main):
-        canvas = tk.Canvas(master=main)
-        canvas.place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
+        self.plot_frame = tk.Frame(master=main)
+        self.plot_frame.place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
         self.fig = plt.figure()
 
     def create_graph2d(self, xs, ys):
-        self.fig = plt.figure()
+        self.fig.clear()
         ax = self.fig.add_subplot()
         ax.plot(xs, ys)
+        include_graph(self.fig, self.plot_frame)
 
     def create_graph3d(self, xs, ys, zs=None):
         if zs is None:
             zs = [0, 0]
-        self.fig = plt.figure()
+        self.fig.clear()
         ax = self.fig.add_subplot(projection="3d")
         ax.plot(xs, ys, zs)
-
-    def include_graph(self):
-        canv = FigureCanvasTkAgg(self.fig, master=Mainframe)
-        canv.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
+        include_graph(self.fig, self.plot_frame)
 
 
 # create main window
@@ -47,21 +52,18 @@ root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 Mainframe = tk.Frame(root, bg="gray")
 Mainframe.place(relheight=1, relwidth=1)
 
-canvas = PltCanvas(Mainframe)
+plot_frame = PltCanvas(Mainframe)
 
 # create button_frame and buttons
 button_frame = tk.Frame(master=Mainframe, bg="yellow")
 button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
 button_2d = tk.Button(master=button_frame, text="2D", font="Helvetica 20",
-                      command=lambda: canvas.create_graph2d([2, 4], [1, 7]))
+                      command=lambda: plot_frame.create_graph2d([2, 4], [1, 7]))
 button_3d = tk.Button(master=button_frame, text="3D", font="Helvetica 20",
-                      command=lambda: canvas.create_graph3d([2, 4], [1, 7], [2, 5]))
-enter_button = tk.Button(master=button_frame, text="Enter", command=canvas.include_graph)
-
+                      command=lambda: plot_frame.create_graph3d([2, 4], [1, 7], [2, 5]))
 button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.1)
 button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.1)
-enter_button.place(relx=0.05, relwidth=0.9, rely=0.9, relheight=0.05)
 
 # create settings_frame
 settings_frame = tk.Frame(master=Mainframe, bg="green")
