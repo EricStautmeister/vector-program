@@ -10,10 +10,9 @@ def include_graph(fig, master):
     canv.get_tk_widget().place(relwidth=1, relheight=1)
 
 
-class PltCanvas:
-
+class PltFrame:
     def __init__(self, main):
-        self.plot_frame = tk.Frame(master=main)
+        self.plot_frame = tk.Frame(master=main, bg=frame_bg)
         self.plot_frame.place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
         self.fig = plt.figure()
 
@@ -30,6 +29,7 @@ class PltCanvas:
         ax = self.fig.add_subplot(projection="3d")
         ax.plot(xs, ys, zs)
         include_graph(self.fig, self.plot_frame)
+
 
 # color variables
 bg = "#282c34"
@@ -62,18 +62,19 @@ root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 Mainframe = tk.Frame(root, bg=bg)
 Mainframe.place(relheight=1, relwidth=1)
 
-plot_frame = PltCanvas(Mainframe)
+plot_frame = PltFrame(Mainframe)
 
 # create button_frame and buttons
 button_frame = tk.Frame(master=Mainframe, bg=frame_bg)
 button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-button_2d = tk.Button(master=button_frame, text="2D", font="Helvetica 20",
+button_2d = tk.Button(master=button_frame, text="2D", bg=button_bg, font="Helvetica 20",
                       command=lambda: plot_frame.create_graph2d([2, 4], [1, 7]))
-button_3d = tk.Button(master=button_frame, text="3D", font="Helvetica 20",
+button_3d = tk.Button(master=button_frame, text="3D", bg=button_bg, font="Helvetica 20",
                       command=lambda: plot_frame.create_graph3d([2, 4], [1, 7], [2, 5]))
 button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.1)
 button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.1)
+
 
 # create settings_frame
 settings_frame = tk.Frame(master=Mainframe, bg=frame_bg)
