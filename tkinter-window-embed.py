@@ -33,22 +33,22 @@ Mainframe.place(relheight=1, relwidth=1)
 canvas = FigureCanvasTkAgg(fig, master=Mainframe)
 canvas.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
 
-# create buttonframe and buttons
-Buttonframe = tk.Frame(master=Mainframe, bg="yellow")
-Buttonframe.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
+# create button_frame and buttons
+button_frame = tk.Frame(master=Mainframe, bg="yellow")
+button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-quit_button = tk.Button(master=Buttonframe, text="Quit", command=root.quit())
-button_2d = tk.Button(master=Buttonframe, text="2d")
-button_3d = tk.Button(master=Buttonframe, text="3d")
+quit_button = tk.Button(master=button_frame, text="Quit", command=root.quit())
+button_2d = tk.Button(master=button_frame, text="2d")
+button_3d = tk.Button(master=button_frame, text="3d")
 
 button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.05)
 button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.05)
 quit_button.place(rely=0.925, relheight=0.05, relx=0.05, relwidth=0.9)
 
-Settingsframe = tk.Frame(master=Mainframe, bg="green")
-Settingsframe.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
+settings_frame = tk.Frame(master=Mainframe, bg="green")
+settings_frame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
 
-Actionframe = tk.Frame(master=Mainframe, bg="blue")
-Actionframe.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
+action_frame = tk.Frame(master=Mainframe, bg="blue")
+action_frame.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
 
 tk.mainloop()
