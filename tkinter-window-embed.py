@@ -1,7 +1,6 @@
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 # create main window
@@ -20,38 +19,38 @@ y_cord = (screen_Height - 80) / 2 - Height / 2
 
 root.geometry("%dx%d+%d+%d" % (Width, Height, x_cord, y_cord))
 
-# create graph
-fig = plt.figure()
-ax = fig.add_subplot()
-ax.plot([3, 4], [5, 6])
-
 # set mainframe
 Mainframe = tk.Frame(root, bg="gray")
 Mainframe.place(relheight=1, relwidth=1)
 
+"""# create graph
+fig = plt.figure()
+ax = fig.add_subplot()
+ax.plot([3, 4], [5, 6])
+
 # include graph
 canvas = FigureCanvasTkAgg(fig, master=Mainframe)
-canvas.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)
+canvas.get_tk_widget().place(relx=0.35, rely=0.03, relheight=0.7, relwidth=0.632)"""
 
-# create buttonframe and buttons
-Buttonframe = tk.Frame(master=Mainframe, bg="yellow")
-Buttonframe.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
+# create button_frame and buttons
+button_frame = tk.Frame(master=Mainframe, bg="yellow")
+button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
-
-button_2d = tk.Button(master=Buttonframe, text="2d")
-button_3d = tk.Button(master=Buttonframe, text="3d")
+button_2d = tk.Button(master=button_frame, text="2D", font="Helvetica 20")
+button_3d = tk.Button(master=button_frame, text="3D", font="Helvetica 20")
 
 button_2d.place(relx=0.05, relwidth=0.425, rely=0.025, relheight=0.1)
 button_3d.place(relx=0.5125, relwidth=0.425, rely=0.025, relheight=0.1)
 
+# create settings_frame
+settings_frame = tk.Frame(master=Mainframe, bg="green")
+settings_frame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
 
-SettingsFrame = tk.Frame(master=Mainframe, bg="green")
-SettingsFrame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
-
-quit_button = tk.Button(master=SettingsFrame, text="Quit", command=root.quit)
+quit_button = tk.Button(master=settings_frame, text="Quit", command=root.quit)
 quit_button.place(rely=0.75, relheight=0.22, relx=0.025, relwidth=0.95)
 
-Actionframe = tk.Frame(master=Mainframe, bg="blue")
-Actionframe.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
+# create action_frame
+action_frame = tk.Frame(master=Mainframe, bg="blue")
+action_frame.place(rely=0.75, relheight=0.22, relx=0.35, relwidth=0.632)
 
 tk.mainloop()
