@@ -31,6 +31,7 @@ class PltFrame:
         self.plot_img.draw()
 
 
+
 VECTORS = []
 
 
@@ -52,7 +53,7 @@ def create_vec():
 
 # color variables
 bg = "#282c34"
-canvas_bg = "#"
+canvas_bg = "#505255"
 frame_bg = "#505255"
 button_bg = "#A9B6C9"
 
