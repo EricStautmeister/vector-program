@@ -11,19 +11,20 @@ class PltFrame:
         self.fig = plt.figure()
         self.plot_img = FigureCanvasTkAgg(self.fig, master=self.plot_frame)
         self.plot_img.get_tk_widget().place(relwidth=1, relheight=1)
+        self.ax = None
 
     def create_graph2d(self, xs, ys):
         self.fig.clear()
-        ax = self.fig.add_subplot()
-        ax.plot(xs, ys)
+        self.ax = self.fig.add_subplot()
+        self.ax.plot(xs, ys)
         self.draw_plot()
 
     def create_graph3d(self, xs, ys, zs=None):
         if zs is None:
             zs = [0, 0]
         self.fig.clear()
-        ax = self.fig.add_subplot(projection="3d")
-        ax.plot(xs, ys, zs)
+        self.ax = self.fig.add_subplot(projection="3d")
+        self.ax.plot(xs, ys, zs)
         self.draw_plot()
 
     def draw_plot(self):
@@ -31,6 +32,23 @@ class PltFrame:
 
 
 VECTORS = []
+
+
+def create_vec():
+    x = int(x_entry.get())
+    y = int(y_entry.get())
+    z = z_entry.get()
+    xorg = int(x_org.get())
+    yorg = int(y_org.get())
+    if z:
+        z = int(z)
+        zorg = int(z_org.get())
+        vector = [x, y, z]
+    else:
+        vector = [x, y]
+    VECTORS.append(vector)
+    vector_list.config(VECTORS)
+
 
 # color variables
 bg = "#282c34"
@@ -91,7 +109,7 @@ x_org.place(relx=0.13, relwidth=0.1, rely=0.115, relheight=0.08)
 y_org.place(relx=0.13, relwidth=0.1, rely=0.205, relheight=0.08)
 z_org.place(relx=0.13, relwidth=0.1, rely=0.295, relheight=0.08)
 
-enter_button = tk.Button(master=vector_frame, text="Enter", font="Helvetica 13", command=print("enter"))
+enter_button = tk.Button(master=vector_frame, text="Enter", font="Helvetica 13", command=create_vec)
 enter_button.place(relx=0.02, relwidth=0.212, relheight=0.07, rely=0.385)
 
 # create settings_frame
