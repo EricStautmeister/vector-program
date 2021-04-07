@@ -1,6 +1,7 @@
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
+import pprint
 
 
 class PltFrame:
@@ -86,7 +87,8 @@ class GUI(object):
         self.x_origin = tk.Entry(master = self.vector_frame, justify = "center", font = "Helvetica 15")
         self.y_origin = tk.Entry(master = self.vector_frame, justify = "center", font = "Helvetica 15")
         self.z_origin = tk.Entry(master = self.vector_frame, justify = "center", font = "Helvetica 15")
-        self.enter_btn = tk.Button(master = self.vector_frame, text = "Enter", font = "Helvetica 13", command = pass_f)
+        self.enter_btn = tk.Button(master = self.vector_frame, text = "Enter", font = "Helvetica 13",
+                                   command = self.add_vector)
         self.button_2d = tk.Button(master = self.settings_frame, text = "2D", bg = self.button_bg,
                                    font = "Helvetica 20",
                                    command = lambda: self.plot_frame.create_graph2d([0, 5], [0, 4]))
@@ -94,7 +96,7 @@ class GUI(object):
                                    font = "Helvetica 20",
                                    command = lambda: self.plot_frame.create_graph3d([2, 4], [1, 7], [0, 4]))
         self.reset_button = tk.Button(master = self.settings_frame, text = "Reset", bg = self.button_bg,
-                                      font = "Helvetica 10", command = print("reset"))
+                                      font = "Helvetica 10", command = self.show_vectors)
         self.quit_button = tk.Button(master = self.settings_frame, text = "Quit", bg = self.button_bg,
                                      font = "Helvetica 10", command = self.root.quit)
         # BUTTONS AND ENTRY PLACING
@@ -118,9 +120,32 @@ class GUI(object):
         y_o = int(self.y_origin.get())
         z_o = int(self.z_origin.get())
 
-        values = [[x_o, x_v], [y_o, y_v], [z_o, z_v]]
+        values = [[x_v, x_o], [y_v, y_o], [z_v, z_o]]
         return values
 
+    def add_vector(self):
+        vector = Vector()
+        GUI.VECTORS.append(vector)
+        self.x_entry.delete(0, "end")
+        self.y_entry.delete(0, "end")
+        self.z_entry.delete(0, "end")
+        self.x_origin.delete(0, "end")
+        self.y_origin.delete(0, "end")
+        self.z_origin.delete(0, "end")
 
-GUI()
+    def show_vectors(self):
+        for vector in self.VECTORS:
+            print(vector.data)
+
+
+gui = GUI()
+
+
+class Vector:
+
+    def __init__(self):
+        self.data = gui.get_values_from_input()
+
+
 tk.mainloop()
+

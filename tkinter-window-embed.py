@@ -31,7 +31,6 @@ class PltFrame:
         self.plot_img.draw()
 
 
-
 VECTORS = []
 
 
