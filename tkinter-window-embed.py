@@ -34,7 +34,7 @@ class PltFrame:
 
 # color variables
 bg = "#282c34"
-canvas_bg = "#"
+canvas_bg = "#505255"
 frame_bg = "#505255"
 button_bg = "#A9B6C9"
 # create main window
