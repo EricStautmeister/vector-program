@@ -62,27 +62,24 @@ Mainframe.place(relheight=1, relwidth=1)
 plot_frame = PltFrame(Mainframe)
 
 # create button_frame and buttons
-button_frame = tk.Frame(master=Mainframe, bg=frame_bg)
-button_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
-
-test_button = tk.Button(master=button_frame, text="test", command=print("pass"))
-test_button.pack()
+vector_frame = tk.Frame(master=Mainframe, bg=frame_bg)
+vector_frame.place(relx=0.0175, relwidth=0.315, rely=0.03, relheight=0.7)
 
 # create settings_frame
 settings_frame = tk.Frame(master=Mainframe, bg=frame_bg)
 settings_frame.place(relx=0.0175, relwidth=0.315, rely=0.75, relheight=0.22)
 
 button_2d = tk.Button(master=settings_frame, text="2D", bg=button_bg, font="Helvetica 20",
-                      command=lambda: plot_frame.create_graph2d([2, 4], [1, 7]))
+                      command=lambda: plot_frame.create_graph2d([0, 2], [0, -8]))
 button_3d = tk.Button(master=settings_frame, text="3D", bg=button_bg, font="Helvetica 20",
                       command=lambda: plot_frame.create_graph3d([2, 4], [1, 7], [2, 5]))
 button_2d.place(relx=0.025, relwidth=0.4625, rely=0.05, relheight=0.35)
 button_3d.place(relx=0.5125, relwidth=0.4625, rely=0.05, relheight=0.35)
 
-start_button = tk.Button(master=settings_frame, text="Start", bg=button_bg, command=print("start"))
-start_button.place(rely=0.45, relheight=0.23, relx=0.025, relwidth=0.95)
+reset_button = tk.Button(master=settings_frame, text="Reset", bg=button_bg, font="Helvetica 10")
+reset_button.place(relx=0.025, relwidth=0.95, rely=0.45, relheight=0.23)
 
-quit_button = tk.Button(master=settings_frame, text="Quit", bg=button_bg, command=root.quit)
+quit_button = tk.Button(master=settings_frame, text="Quit", bg=button_bg, font="Helvetica 10", command=root.quit)
 quit_button.place(rely=0.73, relheight=0.23, relx=0.025, relwidth=0.95)
 
 # create action_frame
