@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 class PltFrame:
     """Class for implementing matplotlib graph into tkinter"""
 
+    GRAPH_MODE = True       # TRUE = 2D, FALSE = 3D
+
     def __init__(self, main):
         self.plot_frame = tk.Frame(master = main, bg = "#505255")
         self.plot_frame.place(relx = 0.35, rely = 0.03, relheight = 0.7, relwidth = 0.632)
