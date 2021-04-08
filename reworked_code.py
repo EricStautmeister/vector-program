@@ -38,16 +38,17 @@ def pass_f():
 
 class GUI(object):
     # CLASS VARIABLES
-    bg = "#282c34"
+    bg = "#777777"
     canvas_bg = "#505255"
-    frame_bg = "#505255"
-    button_bg = "#A9B6C9"
+    frame_bg = "#B0B7C0"
+    button_bg = "#ffffff"
 
-    VECTORS = []
+    VECTORS3D = []
+    VECTORS2D = []
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.iconbitmap('wave-square-solid.ico')
+        self.root.iconbitmap('icon.png')
         self.root.title("Vector Program")
         self.root.geometry("+250+2500")
         self.root.lift()  # MAIN WINDOW
@@ -96,7 +97,7 @@ class GUI(object):
                                    font = "Helvetica 20",
                                    command = lambda: self.plot_frame.create_graph3d([2, 4], [1, 7], [0, 4]))
         self.reset_button = tk.Button(master = self.settings_frame, text = "Reset", bg = self.button_bg,
-                                      font = "Helvetica 10", command = self.show_vectors)
+                                      font = "Helvetica 10", command = pass_f)
         self.quit_button = tk.Button(master = self.settings_frame, text = "Quit", bg = self.button_bg,
                                      font = "Helvetica 10", command = self.root.quit)
         # BUTTONS AND ENTRY PLACING
@@ -113,29 +114,38 @@ class GUI(object):
         self.quit_button.place(rely = 0.73, relheight = 0.23, relx = 0.025, relwidth = 0.95)
 
     def get_values_from_input(self):
-        x_v = int(self.x_entry.get())
-        y_v = int(self.y_entry.get())
-        z_v = int(self.z_entry.get())
-        x_o = int(self.x_origin.get())
-        y_o = int(self.y_origin.get())
-        z_o = int(self.z_origin.get())
-
-        values = [[x_v, x_o], [y_v, y_o], [z_v, z_o]]
-        return values
+        try:
+            x_v = int(self.x_entry.get())
+            x_o = int(self.x_origin.get())
+            y_v = int(self.y_entry.get())
+            y_o = int(self.y_origin.get())
+            try:
+                z_v = int(self.z_entry.get())
+                z_o = int(self.z_origin.get())
+                values = [[x_v, x_o], [y_v, y_o], [z_v, z_o]]
+                self.VECTORS3D.append(values)
+            except ValueError:
+                values = [[x_v, x_o], [y_v, y_o], [0, 0]]
+                self.VECTORS2D.append(values)
+        except x_v or x_o is None:
+            print("No Values were given")
 
     def add_vector(self):
         vector = Vector()
-        GUI.VECTORS.append(vector)
-        self.x_entry.delete(0, "end")
-        self.y_entry.delete(0, "end")
-        self.z_entry.delete(0, "end")
-        self.x_origin.delete(0, "end")
-        self.y_origin.delete(0, "end")
-        self.z_origin.delete(0, "end")
+        if True:
+            GUI.VECTORS2D.append(vector)
+            GUI.VECTORS3D.append(vector)
+            self.x_entry.delete(0, "end")
+            self.y_entry.delete(0, "end")
+            self.z_entry.delete(0, "end")
+            self.x_origin.delete(0, "end")
+            self.y_origin.delete(0, "end")
+            self.z_origin.delete(0, "end")
+        else:
+            pass
 
     def show_vectors(self):
-        for vector in self.VECTORS:
-            print(vector.data)
+        pass
 
 
 gui = GUI()
@@ -144,13 +154,15 @@ gui = GUI()
 class Vector:
 
     def __init__(self):
-        self.data = gui.get_values_from_input()
-        self.sorted = [[self.data[0][1], self.data[0][1] + self.data[0][0]],
-                       [self.data[1][1], self.data[1][1] + self.data[1][0]],
-                       [self.data[2][1], self.data[2][1] + self.data[2][0]]]
+        self.data2D = gui.VECTORS2D
+        self.data3D = gui.VECTORS3D
+        self.sorted2D = [[self.data2D[0][1], self.data2D[0][1] + self.data2D[0][0]],
+                       [self.data2D[1][1], self.data2D[1][1] + self.data2D[1][0]]]
+        self.sorted = [[self.data3D[0][1], self.data3D[0][1] + self.data3D[0][0]],
+                         [self.data3D[1][1], self.data3D[1][1] + self.data3D[1][0]],
+                         [self.data3D[2][1], self.data3D[2][1] + self.data3D[2][0]]]
         gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2])
         gui.plot_frame.draw_plot()
 
 
 tk.mainloop()
-
