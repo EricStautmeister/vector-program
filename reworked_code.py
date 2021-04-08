@@ -1,7 +1,6 @@
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
-import pprint
 
 
 class PltFrame:
@@ -13,19 +12,20 @@ class PltFrame:
         self.fig = plt.figure()
         self.plot_img = FigureCanvasTkAgg(self.fig, master = self.plot_frame)
         self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
+        self.ax = None
 
     def create_graph2d(self, xs, ys):
         self.fig.clear()
-        ax = self.fig.add_subplot()
-        ax.plot(xs, ys)
+        self.ax = self.fig.add_subplot()
+        self.ax.plot(xs, ys)
         self.draw_plot()
 
     def create_graph3d(self, xs, ys, zs=None):
         if zs is None:
             zs = [0, 0]
         self.fig.clear()
-        ax = self.fig.add_subplot(projection = "3d")
-        ax.plot(xs, ys, zs)
+        self.ax = self.fig.add_subplot(projection = "3d")
+        self.ax.plot(xs, ys, zs)
         self.draw_plot()
 
     def draw_plot(self):
@@ -145,6 +145,11 @@ class Vector:
 
     def __init__(self):
         self.data = gui.get_values_from_input()
+        self.sorted = [[self.data[0][1], self.data[0][1] + self.data[0][0]],
+                       [self.data[1][1], self.data[1][1] + self.data[1][0]],
+                       [self.data[2][1], self.data[2][1] + self.data[2][0]]]
+        gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2])
+        gui.plot_frame.draw_plot()
 
 
 tk.mainloop()
