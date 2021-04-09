@@ -178,15 +178,23 @@ gui = GUI()
 
 class Vector:
 
+    sorted = [[2,3], [3, 3], [4, 4]]
+
     def __init__(self):
         self.data2D = gui.VECTORS2D
         self.data3D = gui.VECTORS3D
-        self.sorted2D = [[self.data2D[0][1], self.data2D[0][1] + self.data2D[0][0]],
-                         [self.data2D[1][1], self.data2D[1][1] + self.data2D[1][0]]]
-        self.sorted = [[self.data3D[0][1], self.data3D[0][1] + self.data3D[0][0]],
-                       [self.data3D[1][1], self.data3D[1][1] + self.data3D[1][0]],
-                       [self.data3D[2][1], self.data3D[2][1] + self.data3D[2][0]]]
-        gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2])
+        try:
+            self.sorted2D = [[self.data2D[0][1], self.data2D[0][1] + self.data2D[0][0]],
+                             [self.data2D[1][1], self.data2D[1][1] + self.data2D[1][0]]]
+        except IndexError:
+            pass
+        try:
+            self.sorted = [[self.data3D[0][1], self.data3D[0][1] + self.data3D[0][0]],
+                           [self.data3D[1][1], self.data3D[1][1] + self.data3D[1][0]],
+                           [self.data3D[2][1], self.data3D[2][1] + self.data3D[2][0]]]
+        except IndexError:
+            pass
+        gui.plot_frame.ax.plot(Vector.sorted[0], Vector.sorted[1], Vector.sorted[2])
         gui.plot_frame.draw_plot()
 
 
