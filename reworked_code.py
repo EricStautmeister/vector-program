@@ -14,15 +14,12 @@ class PltFrame:
         self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
         self.ax = None
 
-    def create_graph2d(self, xs, ys):
+    def create_graph2d(self):
         self.fig.clear()
         self.ax = self.fig.add_subplot()
-        self.ax.plot(xs, ys)
         self.draw_plot()
 
-    def create_graph3d(self, xs, ys, zs=None):
-        if zs is None:
-            zs = [0, 0]
+    def create_graph3d(self, xs, ys, zs):
         self.fig.clear()
         self.ax = self.fig.add_subplot(projection = "3d")
         self.ax.plot(xs, ys, zs)
@@ -30,10 +27,6 @@ class PltFrame:
 
     def draw_plot(self):
         self.plot_img.draw()
-
-
-def pass_f():
-    pass
 
 
 class GUI(object):
@@ -65,7 +58,9 @@ class GUI(object):
         # FRAME AND LABEL ASSIGNMENT
         self.vector_frame = tk.Frame(master = self.Mainframe, bg = self.frame_bg)
         self.vector_name = tk.Label(master = self.vector_frame, text = "Vectors", font = "Helvetica 24")
-        self.vector_list_win = tk.Label(master = self.vector_frame)
+        # self.dropdown = tk.OptionMenu(self.vector_frame, "name", "hi", "hello")
+        self.vector_list_win = tk.Label(master = self.vector_frame, anchor = "nw", font = "helvetica 14")
+        self.origin_list_win = tk.Label(master = self.vector_frame, anchor = "nw", font = "helvetica 14")
         self.vector_label = tk.Label(master = self.vector_frame, text = "Vector")
         self.origin_label = tk.Label(master = self.vector_frame, text = "Origin")
         self.settings_frame = tk.Frame(master = self.Mainframe, bg = self.frame_bg)
@@ -73,8 +68,10 @@ class GUI(object):
 
         # FRAME AND LABEL PLACING
         self.vector_frame.place(relx = 0.0175, relwidth = 0.315, rely = 0.03, relheight = 0.7)
-        self.vector_name.place(relx = 0.02, relwidth = 0.96, rely = 0.015, relheight = 0.05)
-        self.vector_list_win.place(relx = 0.25, relwidth = 0.73, rely = 0.075, relheight = 0.38)
+        self.vector_name.place(relx = 0.02, relwidth = 0.7, rely = 0.015, relheight = 0.05)
+        # self.dropdown.place(relx = 0.73, relwidth = 0.24, rely = 0.015, relheight = 0.05)
+        self.vector_list_win.place(relx = 0.25, relwidth = 0.365, rely = 0.075, relheight = 0.38)
+        self.origin_list_win.place(relx = 0.615, relwidth = 0.365, rely = 0.075, relheight = 0.38)
         self.vector_label.place(relx = 0.02, relwidth = 0.1, rely = 0.075, relheight = 0.03)
         self.origin_label.place(relx = 0.13, relwidth = 0.1, rely = 0.075, relheight = 0.03)
         self.settings_frame.place(relx = 0.0175, relwidth = 0.315, rely = 0.75, relheight = 0.22)
@@ -91,7 +88,7 @@ class GUI(object):
                                    command = self.add_vector)
         self.button_2d = tk.Button(master = self.settings_frame, text = "2D", bg = self.button_bg,
                                    font = "Helvetica 20",
-                                   command = lambda: self.plot_frame.create_graph2d([0, 5], [0, 4]))
+                                   command = self.plot_frame.create_graph2d)
         self.button_3d = tk.Button(master = self.settings_frame, text = "3D", bg = self.button_bg,
                                    font = "Helvetica 20",
                                    command = lambda: self.plot_frame.create_graph3d([2, 4], [1, 7], [0, 4]))
@@ -126,6 +123,14 @@ class GUI(object):
     def add_vector(self):
         vector = Vector()
         GUI.VECTORS.append(vector)
+        vector_label_give = "Vectors\n"
+        origin_label_give = "Origins\n"
+        for vec in GUI.VECTORS:
+            vector_label_give += f"x: {vec.data[0][0]} y: {vec.data[1][0]} z: {vec.data[2][0]}\n"
+        for org in GUI.VECTORS:
+            origin_label_give += f"x: {org.data[0][1]} y: {org.data[1][1]} z: {org.data[2][1]}\n"
+        self.vector_list_win.config(text=vector_label_give)
+        self.origin_list_win.config(text=origin_label_give)
         self.x_entry.delete(0, "end")
         self.y_entry.delete(0, "end")
         self.z_entry.delete(0, "end")
@@ -148,9 +153,8 @@ class Vector:
         self.sorted = [[self.data[0][1], self.data[0][1] + self.data[0][0]],
                        [self.data[1][1], self.data[1][1] + self.data[1][0]],
                        [self.data[2][1], self.data[2][1] + self.data[2][0]]]
-        gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2])
+        gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2], color="green")
         gui.plot_frame.draw_plot()
 
 
 tk.mainloop()
-
