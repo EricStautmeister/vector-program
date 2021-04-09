@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 class PltFrame:
     """Class for implementing matplotlib graph into tkinter"""
-
-    GRAPH_MODE = True       # TRUE = 2D, FALSE = 3D
+    mode_input = None
+    GRAPH_MODE = True  # TRUE = 2D, FALSE = 3D
 
     def __init__(self, main):
         self.plot_frame = tk.Frame(master = main, bg = "#505255")
@@ -16,6 +16,24 @@ class PltFrame:
         self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
         self.ax = None
 
+    def graph_control(self, mode: int):
+        if mode == 2:
+            self.GRAPH_MODE = True
+        elif mode == 3:
+            self.GRAPH_MODE = False
+        else:
+            print("Program does not support that dimension.")
+
+    def create_graph(self, mode: int, vectors):
+        self.graph_control(mode)
+        for vector in vectors:
+            xs, ys, zs = vector
+        if self.GRAPH_MODE is True:
+            self.fig.clear()
+            self.ax = self.fig.add_subplot(projection = "3d")
+            self.ax.plot(xs, ys, zs)
+            self.draw_plot()
+
     def create_graph2d(self, xs, ys):
         self.fig.clear()
         self.ax = self.fig.add_subplot()
@@ -23,12 +41,13 @@ class PltFrame:
         self.draw_plot()
 
     def create_graph3d(self, xs, ys, zs=None):
-        if zs is None:
-            zs = [0, 0]
-        self.fig.clear()
-        self.ax = self.fig.add_subplot(projection = "3d")
-        self.ax.plot(xs, ys, zs)
-        self.draw_plot()
+        if self.GRAPH_MODE is True:
+            if zs is None:
+                zs = [0, 0]
+            self.fig.clear()
+            self.ax = self.fig.add_subplot(projection = "3d")
+            self.ax.plot(xs, ys, zs)
+            self.draw_plot()
 
     def draw_plot(self):
         self.plot_img.draw()
@@ -47,6 +66,10 @@ class GUI(object):
 
     VECTORS3D = []
     VECTORS2D = []
+    if PltFrame.GRAPH_MODE is True:
+        USED = VECTORS2D
+    if PltFrame.GRAPH_MODE is False:
+        USED = VECTORS3D
 
     def __init__(self):
         self.root = tk.Tk()
@@ -159,10 +182,10 @@ class Vector:
         self.data2D = gui.VECTORS2D
         self.data3D = gui.VECTORS3D
         self.sorted2D = [[self.data2D[0][1], self.data2D[0][1] + self.data2D[0][0]],
-                       [self.data2D[1][1], self.data2D[1][1] + self.data2D[1][0]]]
+                         [self.data2D[1][1], self.data2D[1][1] + self.data2D[1][0]]]
         self.sorted = [[self.data3D[0][1], self.data3D[0][1] + self.data3D[0][0]],
-                         [self.data3D[1][1], self.data3D[1][1] + self.data3D[1][0]],
-                         [self.data3D[2][1], self.data3D[2][1] + self.data3D[2][0]]]
+                       [self.data3D[1][1], self.data3D[1][1] + self.data3D[1][0]],
+                       [self.data3D[2][1], self.data3D[2][1] + self.data3D[2][0]]]
         gui.plot_frame.ax.plot(self.sorted[0], self.sorted[1], self.sorted[2])
         gui.plot_frame.draw_plot()
 
