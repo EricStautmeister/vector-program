@@ -3,7 +3,7 @@ import tkinter as tk
 
 class LoadingScreen(object):
     loader = tk.Tk()
-    destroy_counter = 2
+    destroy_counter = 4
 
     def countdown(self, time):
         if time == -1:

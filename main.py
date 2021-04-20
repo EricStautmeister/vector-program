@@ -1,5 +1,4 @@
 import loading_screen
-import merlin_main_code
 
 loader = loading_screen.LoadingScreen()
 trigger = True
@@ -10,6 +9,7 @@ while trigger is True:
     except Exception:
        trigger = False
 
+import merlin_main_code
 gui = merlin_main_code.GUI()
 gui.root.lift()
 gui.root.wm_attributes("-topmost", True)
