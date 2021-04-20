@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
@@ -12,14 +13,19 @@ class GUI:
 
     root = tk.Tk()
     root.withdraw()
+    log = []
+    for i in range(200):
+        message = str("Log.message:" + str(i))
+        log.append(message)
 
     def __init__(self):
 
         # cosmetics and colors
         self.root.iconbitmap('icon.ico')
         self.root.title("Vector Program")
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bg = "#a4b0be"
-        self.frame_bg = "#CDCDCD"
+        self.frame_bg = "#ffffff"
         self.button_bg = "#ffffff"
 
         # gui arrangement
@@ -83,7 +89,7 @@ class GUI:
         self.button_3d = tk.Button(master = self.settings_frame, text = "3D", bg = self.button_bg,
                                    font = "Helvetica 20", command = lambda: self.function.make_3d(self.make_zs()))
         self.log = tk.Button(master = self.settings_frame, text = "Log", bg = self.button_bg,
-                             font = "Helvetica 20", command = lambda: pass_placeholder())
+                             font = "Helvetica 20", command = self.function.make_log)
         self.place_holder = tk.Button(master = self.settings_frame, text = "Test", bg = self.button_bg,
                                       font = "Helvetica 20", command = lambda: pass_placeholder())
         self.reset_button = tk.Button(master = self.settings_frame, text = "Reset", bg = self.button_bg,
@@ -116,6 +122,12 @@ class GUI:
         except AttributeError:
             pass
 
+    def on_closing(self):
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.root.destroy()
+
+
+
 
 class ProgramControls:
     """Creates Functions to control functionalities"""
@@ -136,6 +148,9 @@ class ProgramControls:
     def make_3d(self, empty_var):
         self.dim = 3
         self.pltframe.create_graph3d()
+    
+    def make_log(self):
+        self.pltframe.create_log_window()
 
     def get_values(self, x_entry, y_entry, x_origin, y_origin, z_entry, z_origin):
         # data
@@ -187,20 +202,44 @@ class PltFrame:
 
     def __init__(self, main):
         self.plot_frame = tk.Frame(master = main, bg = "#505255")
-        self.fig = plt.figure()
-        self.plot_img = FigureCanvasTkAgg(self.fig, master = self.plot_frame)
-        self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
         self.ax = None
 
     def create_graph2d(self):
-        self.fig.clear()
-        self.ax = self.fig.add_subplot()
-        self.draw_plot()
+        try:
+            for widget in self.plot_frame.winfo_children():
+                widget.destroy()
+            self.fig = plt.figure()
+            self.plot_img = FigureCanvasTkAgg(self.fig, master = self.plot_frame)
+            self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
+            self.ax = self.fig.add_subplot()
+            self.draw_plot()
+        except Exception:
+            pass
 
     def create_graph3d(self):
-        self.fig.clear()
-        self.ax = self.fig.add_subplot(projection = "3d")
-        self.draw_plot()
+        try:
+            for widget in self.plot_frame.winfo_children():
+                widget.destroy()
+            self.fig = plt.figure()
+            self.plot_img = FigureCanvasTkAgg(self.fig, master = self.plot_frame)
+            self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
+            self.ax = self.fig.add_subplot(projection = "3d")
+            self.draw_plot()
+        except Exception:
+            pass
+
+    def create_log_window(self):
+        for widget in self.plot_frame.winfo_children():
+            widget.destroy()
+        scrollbar = tk.Scrollbar(self.plot_frame)
+        scrollbar.pack(side = "right", fill = "both")
+        lbw = (round((self.plot_frame.winfo_reqwidth())/4))*2
+        lbh = round((self.plot_frame.winfo_reqheight() - 4) / 16)
+        log = tk.Listbox(self.plot_frame, yscrollcommand = scrollbar.set, height = 100, width = lbw)
+        for message in GUI.log:
+            log.insert("end", message)
+        log.pack(side = "top", fill = "both")
+        scrollbar.config(command = log.yview)
 
     def draw_plot(self):
         self.plot_img.draw()
