@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import matplotlib.pyplot as plt
 
 
@@ -25,7 +25,7 @@ class GUI:
         self.root.title("Vector Program")
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bg = "#a4b0be"
-        self.frame_bg = "#ffffff"
+        self.frame_bg = "#CDCDCD"
         self.button_bg = "#ffffff"
 
         # gui arrangement
@@ -93,7 +93,7 @@ class GUI:
         self.place_holder = tk.Button(master = self.settings_frame, text = "Test", bg = self.button_bg,
                                       font = "Helvetica 20", command = lambda: pass_placeholder())
         self.reset_button = tk.Button(master = self.settings_frame, text = "Reset", bg = self.button_bg,
-                                      font = "Helvetica 10", command = lambda: print("lost"))
+                                      font = "Helvetica 10", command = lambda: pass_placeholder())
         self.quit_button = tk.Button(master = self.settings_frame, text = "Quit", bg = self.button_bg,
                                      font = "Helvetica 10", command = self.root.quit)
 
@@ -103,6 +103,30 @@ class GUI:
         self.place_holder.place(relx = 0.75625, relwidth = 0.21875, rely = 0.05, relheight = 0.35)
         self.reset_button.place(relx = 0.025, relwidth = 0.95, rely = 0.45, relheight = 0.23)
         self.quit_button.place(rely = 0.73, relheight = 0.23, relx = 0.025, relwidth = 0.95)
+
+        # Action Frame
+        '''self.toolbar = NavigationToolbar2Tk(self.action_frame, PltFrame.plot_frame)
+        self.toolbar.pack()'''
+        self.x_axis_min = tk.Entry(master = self.action_frame, justify = "center", font = "Helvetica 15")
+        self.x_axis_max = tk.Entry(master = self.action_frame, justify = "center", font = "Helvetica 15")
+        self.y_axis_min = tk.Entry(master = self.action_frame, justify = "center", font = "Helvetica 15")
+        self.y_axis_max = tk.Entry(master = self.action_frame, justify = "center", font = "Helvetica 15")
+
+        self.x_axis_label = tk.Label(master = self.action_frame, text = "X axis min/max")
+        self.y_axis_label = tk.Label(master = self.action_frame, text = "Y axis min/max")
+
+        self.x_axis_min.place(relx = 0.025, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
+        self.x_axis_max.place(relx = 0.146875, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
+        self.y_axis_min.place(relx = 0.26875, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
+        self.y_axis_max.place(relx = 0.390625, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
+        self.x_axis_min.insert(0, "-")
+        self.x_axis_max.insert(0, "+")
+        self.y_axis_min.insert(0, "-")
+        self.y_axis_max.insert(0, "+")
+
+        self.x_axis_label.place(relx = 0.025, relwidth = 0.21875, rely = 0.05, relheight = 0.35)
+        self.y_axis_label.place(relx = 0.26875, relwidth = 0.21875, rely = 0.05, relheight = 0.35)
+
         self.root.deiconify()
 
     def make_zs(self):
@@ -202,6 +226,9 @@ class PltFrame:
 
     def __init__(self, main):
         self.plot_frame = tk.Frame(master = main, bg = "#505255")
+        self.fig = plt.figure()
+        self.plot_img = FigureCanvasTkAgg(self.fig, master = self.plot_frame)
+        self.plot_img.get_tk_widget().place(relwidth = 1, relheight = 1)
         self.ax = None
 
     def create_graph2d(self):
@@ -233,12 +260,12 @@ class PltFrame:
             widget.destroy()
         scrollbar = tk.Scrollbar(self.plot_frame)
         scrollbar.pack(side = "right", fill = "both")
-        lbw = (round((self.plot_frame.winfo_reqwidth())/4))*2
-        lbh = round((self.plot_frame.winfo_reqheight() - 4) / 16)
-        log = tk.Listbox(self.plot_frame, yscrollcommand = scrollbar.set, height = 100, width = lbw)
+        # lbw = (round((self.plot_frame.winfo_reqwidth())/4))*2
+        # lbh = round((self.plot_frame.winfo_reqheight() - 4) / 16)
+        log = tk.Listbox(self.plot_frame, yscrollcommand = scrollbar.set)
         for message in GUI.log:
             log.insert("end", message)
-        log.pack(side = "top", fill = "both")
+        log.place(relheight = 1, relwidth = 1)
         scrollbar.config(command = log.yview)
 
     def draw_plot(self):
