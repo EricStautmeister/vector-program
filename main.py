@@ -7,11 +7,12 @@ while trigger is True:
         loader.loader.update_idletasks()
         loader.loader.update()
     except Exception:
-       trigger = False
+        import gui
+        gui = gui.GUI()
+        gui.root.lift()
+        gui.root.wm_attributes("-topmost", True)
+        gui.root.wm_attributes("-topmost", False)
+        gui.root.mainloop()
+        trigger = False
 
-import merlin_main_code
-gui = merlin_main_code.GUI()
-gui.root.lift()
-gui.root.wm_attributes("-topmost", True)
-gui.root.wm_attributes("-topmost", False)
-gui.root.mainloop()
+
