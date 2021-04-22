@@ -52,10 +52,18 @@ class GUI:
         # functions class and vectors
         self.Vectors2d = []
         self.Vectors3d = []
+        self.calc_modes_list = ["Mode List",
+                                "1", "2", "3",
+                                "4", "5", "6",
+                                "7", "8", "9"]
+        OPTIONS_VALUE = self.MODE_OPTION = tk.StringVar(self.vector_frame)
+        OPTIONS_VALUE.set(self.calc_modes_list[0])
         self.function = ProgramControls(self.Mainframe, self.Vectors2d, self.Vectors3d)
 
         # VECTOR FRAME
         self.vector_name = tk.Label(master = self.vector_frame, text = "Vectors", font = "Helvetica 24")
+        self.calc_mode = tk.OptionMenu(self.vector_frame, OPTIONS_VALUE, *self.calc_modes_list)
+        self.calc_mode.configure(bg = "#ffffff")
         self.vector_list_win = tk.Label(master = self.vector_frame, anchor = "nw", font = "helvetica 14")
         self.origin_list_win = tk.Label(master = self.vector_frame, anchor = "nw", font = "helvetica 14")
         self.vector_label = tk.Label(master = self.vector_frame, text = "Vector")
@@ -71,7 +79,8 @@ class GUI:
                                    command = lambda: self.function.create_vector(self.x_entry, self.y_entry,
                                                                                  self.x_origin, self.y_origin,
                                                                                  self.z_entry, self.z_origin))
-        self.vector_name.place(relx = 0.02, relwidth = 0.96, rely = 0.015, relheight = 0.05)
+        self.vector_name.place(relx = 0.02, relwidth = 0.47, rely = 0.015, relheight = 0.05)
+        self.calc_mode.place(relx = 0.51, relwidth = 0.47, rely = 0.015, relheight = 0.05)
         self.vector_list_win.place(relx = 0.25, relwidth = 0.365, rely = 0.075, relheight = 0.38)
         self.origin_list_win.place(relx = 0.615, relwidth = 0.365, rely = 0.075, relheight = 0.38)
         self.vector_label.place(relx = 0.02, relwidth = 0.1, rely = 0.075, relheight = 0.03)
