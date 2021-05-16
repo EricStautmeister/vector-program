@@ -124,17 +124,19 @@ class GUI:
         self.x_axis_label = tk.Label(master = self.action_frame, text = "X axis min/max")
         self.y_axis_label = tk.Label(master = self.action_frame, text = "Y axis min/max")
 
-        self.x_axis_min.place(relx = 0.025, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
-        self.x_axis_max.place(relx = 0.146875, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
-        self.y_axis_min.place(relx = 0.26875, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
-        self.y_axis_max.place(relx = 0.390625, relwidth = 0.096875, rely = 0.55, relheight = 0.35)
-        self.x_axis_min.insert(0, "-")
-        self.x_axis_max.insert(0, "+")
-        self.y_axis_min.insert(0, "-")
-        self.y_axis_max.insert(0, "+")
+        self.x_axis_label.place(relx = 0.025, relwidth = 0.15, rely = 0.05, relheight = 0.12)
+        self.y_axis_label.place(relx = 0.2, relwidth = 0.15, rely = 0.05, relheight = 0.12)
 
-        self.x_axis_label.place(relx = 0.025, relwidth = 0.21875, rely = 0.05, relheight = 0.35)
-        self.y_axis_label.place(relx = 0.26875, relwidth = 0.21875, rely = 0.05, relheight = 0.35)
+        self.x_axis_min.place(relx = 0.025, relwidth = 0.070, rely = 0.22, relheight = 0.24)
+        self.x_axis_max.place(relx = 0.105, relwidth = 0.070, rely = 0.22, relheight = 0.24)
+        self.y_axis_min.place(relx = 0.2, relwidth = 0.070, rely = 0.22, relheight = 0.24)
+        self.y_axis_max.place(relx = 0.28, relwidth = 0.070, rely = 0.22, relheight = 0.24)
+        self.x_axis_min.insert(0, "x-")
+        self.x_axis_max.insert(0, "x+")
+
+        self.y_axis_min.insert(0, "y-")
+        self.y_axis_max.insert(0, "y+")
+
 
         self.root.deiconify()
 
