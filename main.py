@@ -14,5 +14,3 @@ while trigger is True:
         gui.root.wm_attributes("-topmost", False)
         gui.root.mainloop()
         trigger = False
-
-

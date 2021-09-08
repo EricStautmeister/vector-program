@@ -13,8 +13,8 @@ class LoadingScreen(object):
 
     def __init__(self):
         # cosmetics and colors
-        self.loader.image = tk.PhotoImage(file = 'icon.png')
-        self.label = tk.Label(self.loader, image = self.loader.image, bg = 'white')
+        self.loader.image = tk.PhotoImage(file='icon.png')
+        self.label = tk.Label(self.loader, image=self.loader.image, bg='white')
         self.loader.overrideredirect(True)
         self.loader.geometry("+250+250")
         self.loader.lift()
@@ -24,8 +24,10 @@ class LoadingScreen(object):
 
         # gui arrangement
         self.loader.update_idletasks()
-        x = (self.loader.winfo_screenwidth() - self.loader.winfo_reqwidth()) / 2
-        y = (self.loader.winfo_screenheight() - self.loader.winfo_reqheight()) / 2
+        x = (self.loader.winfo_screenwidth() -
+             self.loader.winfo_reqwidth()) / 2
+        y = (self.loader.winfo_screenheight() -
+             self.loader.winfo_reqheight()) / 2
         self.loader.geometry("+%d+%d" % (x, y))
         self.countdown(self.destroy_counter)
 
