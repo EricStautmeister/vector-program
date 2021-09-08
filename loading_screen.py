@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-class LoadingScreen(object):
+class LoadingScreen:
     loader = tk.Tk()
     destroy_counter = 4
 
