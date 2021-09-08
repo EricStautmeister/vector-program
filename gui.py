@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def pass_placeholder():
-    pass
+    raise NotImplementedError()
 
 
 class GUI:
