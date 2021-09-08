@@ -237,13 +237,11 @@ class ProgramControls:
         if self.dim == 2:
             if x_o and y_o:
                 return [[int(x_o), x_v], [int(y_o), y_v]]
-            else:
-                return [[0, x_v], [0, y_v]]
+            return [[0, x_v], [0, y_v]]
         else:
             if x_o and y_o and z_o:
                 return [[int(x_o), x_v], [int(y_o), y_v], [int(z_o), z_v]]
-            else:
-                return [[0, x_v], [0, y_v], [0, z_v]]
+            return [[0, x_v], [0, y_v], [0, z_v]]
 
     def create_vector(self, x_entry, y_entry, x_origin, y_origin, z_entry, z_origin, ):
         self.data = self.get_values(
