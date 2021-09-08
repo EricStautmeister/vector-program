@@ -112,9 +112,9 @@ class GUI:
                              font="Helvetica 20", command=self.function.make_log)
         self.place_holder = tk.Button(master=self.settings_frame, text="Test", bg=self.button_bg,
 
-                                      font="Helvetica 20", command=pass_placeholder)
+                                      font="Helvetica 20", command=lambda: pass_placeholder())
         self.reset_button = tk.Button(master=self.settings_frame, text="Reset", bg=self.button_bg,
-                                      font="Helvetica 10", command=pass_placeholder)
+                                      font="Helvetica 10", command=lambda: pass_placeholder())
 
         self.quit_button = tk.Button(master=self.settings_frame, text="Quit", bg=self.button_bg,
                                      font="Helvetica 10", command=self.root.quit)
