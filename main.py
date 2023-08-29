@@ -2,7 +2,7 @@ import loading_screen
 
 loader = loading_screen.LoadingScreen()
 trigger = True
-while trigger is True:
+while trigger:
     try:
         loader.loader.update_idletasks()
         loader.loader.update()

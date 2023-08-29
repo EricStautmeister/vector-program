@@ -21,7 +21,7 @@ class GUI:
     def __init__(self):
 
         # cosmetics and colors
-        self.root.iconbitmap('icon.ico')
+        # self.root.iconbitmap('icon.ico')
         self.root.title("Vector Program")
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bg = "#a4b0be"
