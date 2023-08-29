@@ -13,8 +13,8 @@ class LoadingScreen(object):
 
     def __init__(self):
         # cosmetics and colors
-        self.loader.image = tk.PhotoImage(file = 'icon.png')
-        self.label = tk.Label(self.loader, image = self.loader.image, bg = 'white')
+        self.loader.image = tk.PhotoImage(file="icon.png")
+        self.label = tk.Label(self.loader, image=self.loader.image, bg="white")
         self.loader.overrideredirect(True)
         self.loader.geometry("+250+250")
         self.loader.lift()
